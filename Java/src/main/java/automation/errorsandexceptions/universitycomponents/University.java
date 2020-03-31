@@ -62,28 +62,25 @@ public class University {
         }
     }
 
-    public ArrayList<Student> getTotalListOfStudents() {
+    public ArrayList<Student> getTotalListOfStudents() throws FacultyNotFoundException,
+            GroupNotFoundException, StudentNotFoundException {
         ArrayList<Student> totalListOfStudents = new ArrayList<>();
-        try {
-            for (Faculty faculty : getListOfFaculties()) {
-                for (Group group : faculty.getListOfGroupsInFaculty()) {
-                    totalListOfStudents.addAll(group.getStudentListOfGroup());
-                }
+        for (Faculty faculty : getListOfFaculties()) {
+            for (Group group : faculty.getListOfGroupsInFaculty()) {
+                totalListOfStudents.addAll(group.getStudentListOfGroup());
             }
-        } catch (GroupNotFoundException | FacultyNotFoundException
-                 | StudentNotFoundException exception) {
-                exception.printStackTrace();
         }
         return totalListOfStudents;
     }
 
-    public void printTotalListOfStudents() {
+    public void printTotalListOfStudents() throws GroupNotFoundException,
+            FacultyNotFoundException, StudentNotFoundException {
         System.out.println("\nHere is a total list of students in the university:\n"
                            + getTotalListOfStudents());
     }
 
     public Student getSelectedStudentFromTotalList(String nameOfSelectedStudent)
-            throws StudentNotFoundException {
+            throws StudentNotFoundException, FacultyNotFoundException, GroupNotFoundException {
         if (nameOfSelectedStudent == null || nameOfSelectedStudent.isEmpty()) {
             throw new IllegalArgumentException("\n(!)\tINCORRECT NAME OF STUDENT: NULL OR EMPTY.");
         }
