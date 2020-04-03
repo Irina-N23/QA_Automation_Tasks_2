@@ -10,12 +10,7 @@ public enum Course {
     private String nameOfCourse;
 
     Course(String nameOfCourse) {
-        if (nameOfCourse != null && !nameOfCourse.isEmpty()) {
-            this.nameOfCourse = nameOfCourse;
-        } else {
-            System.out.println("\033[0;91mIncorrect course name: null or empty.\033[0m");
-            System.exit(1);
-        }
+        this.nameOfCourse = nameOfCourse;
     }
 
     public String getNameOfCourse() {
