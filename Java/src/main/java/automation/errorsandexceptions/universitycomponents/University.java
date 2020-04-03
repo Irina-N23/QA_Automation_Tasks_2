@@ -80,18 +80,24 @@ public class University {
     }
 
     public Student getSelectedStudentFromTotalList(String nameOfSelectedStudent)
-            throws StudentNotFoundException, FacultyNotFoundException, GroupNotFoundException {
-        if (nameOfSelectedStudent == null || nameOfSelectedStudent.isEmpty()) {
-            throw new IllegalArgumentException("\n(!)\tINCORRECT NAME OF STUDENT: NULL OR EMPTY.");
+            throws FacultyNotFoundException, GroupNotFoundException, StudentNotFoundException {
+        if (nameOfSelectedStudent.isEmpty()) {
+            throw new IllegalArgumentException("\n(!)\tINCORRECT NAME OF STUDENT: EMPTY.");
         }
 
-         for (Student student : getTotalListOfStudents()) {
+        Student selectedStudent = null;
+        for (Student student : getTotalListOfStudents()) {
             if (student.getFullName().toLowerCase().contains(nameOfSelectedStudent.toLowerCase())) {
-                return student;
+                selectedStudent = student;
             }
         }
-        throw new StudentNotFoundException("\n(!)\tSTUDENT <" + nameOfSelectedStudent
-                                           + "> HAS NOT BEEN FOUND.");
+
+        if (selectedStudent == null) {
+            throw new StudentNotFoundException("\n(!)\tSTUDENT <" + nameOfSelectedStudent
+                                               + "> HAS NOT BEEN FOUND.");
+        } else {
+            return selectedStudent;
+        }
     }
 
     public ArrayList<Group> getTotalListOfGroups() {

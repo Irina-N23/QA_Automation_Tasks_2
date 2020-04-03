@@ -81,19 +81,28 @@ public class Menu {
         }
     }
 
-    private void printAverageGradeForAllCoursesOfStudent() throws StudentNotFoundException,
-            CourseNotFoundException, FacultyNotFoundException, GroupNotFoundException {
+    private void printAverageGradeForAllCoursesOfStudent() throws CourseNotFoundException,
+            FacultyNotFoundException, GroupNotFoundException, StudentNotFoundException {
         Scanner scanner = new Scanner(System.in);
 
         activatedUniversity.printTotalListOfStudents();
         System.out.print("Just input last name of necessary student:\t");
-        Student selectedStudent = activatedUniversity.
-                                      getSelectedStudentFromTotalList(scanner.nextLine());
+        String inputtedNameOfStudent = scanner.nextLine();
+        Student selectedStudent = null;
+        try {
+            selectedStudent = activatedUniversity.
+                                          getSelectedStudentFromTotalList(inputtedNameOfStudent);
+        } catch (StudentNotFoundException exception) {
+            System.err.println("Student <" + inputtedNameOfStudent + "> has not been found. "
+                               + "Just try again and input another name of student!");
+            printAverageGradeForAllCoursesOfStudent();
+        }
 
-        System.out.printf("\033[1;36m\nAn average grade for all courses of %s is "
-                          + "\033[4;36m%.2f\033[0m.\n", selectedStudent, averageGradeCounter
-                                  .getAverageGradeForAllCoursesOfStudent(selectedStudent));
-
+        if (selectedStudent != null) {
+            System.out.printf("\033[1;36m\nAn average grade for all courses of %s is "
+                              + "\033[4;36m%.2f\033[0m.\n", selectedStudent, averageGradeCounter
+                                      .getAverageGradeForAllCoursesOfStudent(selectedStudent));
+        }
     }
 
     private void printAverageGradeForCourseInGroup() throws FacultyNotFoundException,
