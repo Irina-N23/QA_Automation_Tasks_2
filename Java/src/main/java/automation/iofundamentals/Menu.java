@@ -67,7 +67,7 @@ class Menu {
         }
     }
 
-    void deleteTextFileOrLeaveIt() {
+    private void deleteTextFileOrLeaveIt() {
         if (DirectoryTreeWriter.directoryTree.exists()) {
             System.out.print("\nDo you want to delete created text file before exit?"
                                + "\nJust input <yes>/<no> here:\t");
