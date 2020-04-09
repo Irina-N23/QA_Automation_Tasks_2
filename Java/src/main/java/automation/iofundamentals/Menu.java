@@ -31,7 +31,7 @@ class Menu {
                                   fileAnalyser.getAverageFileNameLength());
             } else {
                 System.out.print("\n\"" + chosenFile.getName()
-                                 + "\" is not a directory or .txt-file.\n"
+                                 + "\" is not a directory or text file.\n"
                                  + "Just input another path here: ");
                 validatePath();
             }
