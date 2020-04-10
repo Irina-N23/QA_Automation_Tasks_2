@@ -4,8 +4,7 @@ public class Runner {
     public static void main(String[] args) {
         Menu menu = new Menu();
 
-        menu.printStartMessage();
-        menu.validatePath();
+        menu.validatePath(args[0]);
         menu.restartOrExit();
     }
 }

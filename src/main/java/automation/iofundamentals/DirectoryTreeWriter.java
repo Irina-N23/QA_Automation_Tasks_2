@@ -5,10 +5,9 @@ import java.io.*;
 class DirectoryTreeWriter {
     static String fileTab = "|    ";
     static String directoryTab = "|----";
-    private StringBuilder treeContent = new StringBuilder();
-    static File directoryTree = new File("src" + File.separator + "main" + File.separator + "java"
-                                         + File.separator + "automation" + File.separator + "io"
-                                         + "fundamentals" + File.separator + "DirectoryTree.txt");
+    StringBuilder treeContent = new StringBuilder();
+    static File directoryTree = new File("src" + File.separator + "main" + File.separator
+                                         + "resources" + File.separator + "DirectoryTree.txt");
 
     private StringBuilder getDirectoryTree(File directory, int depthLevel) {
         if (depthLevel == 0) {
@@ -37,7 +36,8 @@ class DirectoryTreeWriter {
                                                            new FileWriter(directoryTree)))) {
             printWriter.print(getDirectoryTree(chosenDirectory, 0).toString());
             printWriter.flush();
-            System.out.println("File \"DirectoryTree.txt\" has been successfully written.");
+            System.out.println("\nFile \"" + directoryTree.getName()
+                               + "\" has been successfully written.");
         } catch (IOException exception) {
             System.err.println("File writing has been failed:\n" + exception);
         }

@@ -87,7 +87,6 @@ class DirectoryTreeFileAnalyser {
         } catch (IOException exception) {
             System.err.print("File reading has been failed:\n" + exception);
         }
-        return (totalNumberOfFiles == 0) ? totalNumberOfFiles :
-                                             totalNumberOfFiles / (double) totalNumberOfDirectories;
+        return (totalNumberOfFiles == 0) ? 0.0 : totalFileNameLength / totalNumberOfFiles;
     }
 }
