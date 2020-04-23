@@ -13,9 +13,9 @@ class ParkingSpot {
         return spotId;
     }
 
-    void isOccupied() {
+    void occupySpot() {
         try {
-            Thread.sleep(new Random().nextInt(300));
+            Thread.sleep(new Random().nextInt(5000));
         } catch (InterruptedException exception) {
             exception.printStackTrace();
         }

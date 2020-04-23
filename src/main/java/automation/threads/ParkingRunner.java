@@ -15,6 +15,11 @@ public class ParkingRunner {
         ParkingLot parkingLot = new ParkingLot(listOfVacantParkingSpots);
         for (int i = 1; i <= numberOfClients; i++) {
             new Client(parkingLot, i).start();
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

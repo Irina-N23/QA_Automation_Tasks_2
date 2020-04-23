@@ -14,14 +14,13 @@ class Client extends Thread {
 
         try {
             spot = parkingLot.getVacantParkingSpot(400);
-
             if (spot != null) {
                 System.out.println("Client [id #" + idOfClient + "] has occupied the spot № "
                                    + spot.getSpotId() + ".");
-                spot.isOccupied();
+                spot.occupySpot();
             }
         } catch (WaitingPeriodExceededException exception) {
-            System.out.println("(!)\tClient [id #" + idOfClient + "] has been lost:\t"
+            System.out.println("\n(!)\tClient [id #" + idOfClient + "] has been lost:\t"
                                + exception.getMessage());
         } finally {
             if (spot != null) {

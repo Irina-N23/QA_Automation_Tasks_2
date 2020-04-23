@@ -16,18 +16,22 @@ class ParkingLot {
 
     ParkingSpot getVacantParkingSpot(int maxWaitingPeriodInMilliseconds)
                                              throws WaitingPeriodExceededException {
-        try {
-            if (semaphore.tryAcquire(maxWaitingPeriodInMilliseconds, TimeUnit.MILLISECONDS)) {
-                return vacantParkingSpots.poll();
+        synchronized (vacantParkingSpots) {
+            try {
+                if (semaphore.tryAcquire(maxWaitingPeriodInMilliseconds, TimeUnit.MILLISECONDS)) {
+                    return vacantParkingSpots.poll();
+                }
+            } catch (InterruptedException exception) {
+                throw new WaitingPeriodExceededException(exception.getMessage());
             }
-        } catch (InterruptedException exception) {
-            throw new WaitingPeriodExceededException(exception.getMessage());
+            throw new WaitingPeriodExceededException("Waiting time for a vacant parking spot has been exceeded.");
         }
-        throw new WaitingPeriodExceededException("Waiting time for a vacant parking spot has been exceeded.");
     }
 
     void vacateSpot(ParkingSpot spotForVacation) {
-        vacantParkingSpots.add(spotForVacation);
-        semaphore.release();
+        synchronized (vacantParkingSpots) {
+            vacantParkingSpots.add(spotForVacation);
+            semaphore.release();
+        }
     }
 }
