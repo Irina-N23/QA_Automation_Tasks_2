@@ -31,7 +31,7 @@ class ParkingLot {
     void vacateSpot(ParkingSpot spotForVacation) {
         synchronized (vacantParkingSpots) {
             vacantParkingSpots.add(spotForVacation);
-            semaphore.release();
         }
+        semaphore.release();
     }
 }

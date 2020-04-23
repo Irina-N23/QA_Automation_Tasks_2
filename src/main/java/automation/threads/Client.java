@@ -9,6 +9,7 @@ class Client extends Thread {
         this.idOfClient = id;
     }
 
+    @Override
     public void run() {
         ParkingSpot spot = null;
 

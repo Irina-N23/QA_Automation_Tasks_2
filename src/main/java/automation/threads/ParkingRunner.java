@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class ParkingRunner {
     public static void main(String[] args) {
-        int numberOfClients = 10 + new Random().nextInt(20);
+        int numberOfClients = ParkingLot.PARKING_LOT_CAPACITY + new Random().nextInt(20);
 
         LinkedList<ParkingSpot> listOfVacantParkingSpots = new LinkedList<>();
         for (int i = 1; i <= ParkingLot.PARKING_LOT_CAPACITY; i++) {
