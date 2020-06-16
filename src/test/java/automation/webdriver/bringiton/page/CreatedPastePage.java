@@ -1,11 +1,10 @@
 package automation.webdriver.bringiton.page;
 
-import automation.webdriver.CustomConditions;
+import automation.webdriver.utilities.CustomConditions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class CreatedPastePage {
@@ -14,7 +13,7 @@ public class CreatedPastePage {
     @FindBy(id = "success")
     private WebElement successfulPasteCreationMessage;
 
-    @FindBy(xpath = "//div[@class='paste_box_line1']")
+    @FindBy(className = "paste_box_line1")
     private WebElement createdPastePageTitle;
 
     @FindBy(xpath = "//span[@class='h_640']/a[@class='buttonsm']")
@@ -31,8 +30,7 @@ public class CreatedPastePage {
     public String getCreatedPastePageTitle() {
         new WebDriverWait(driver, 10)
                 .until(CustomConditions.jQueryAJAXsCompleted());
-        new WebDriverWait(driver, 10)
-                .until(ExpectedConditions.visibilityOf(successfulPasteCreationMessage));
+        CustomConditions.waitForVisibilityOf(successfulPasteCreationMessage, driver);
         return createdPastePageTitle.getText();
     }
 
@@ -40,7 +38,7 @@ public class CreatedPastePage {
         return syntaxHighlightingButton.getText();
     }
 
-    public Boolean isCreatedPastePageCodeEqualToInputtedCode() {
+    public Boolean isCreatedPasteCodeEqualToInputtedCode() {
         return createdPasteCode.getText().equals(PastebinHomePage.CODE_FOR_NEW_PASTE);
     }
 }

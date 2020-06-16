@@ -1,13 +1,12 @@
 package automation.webdriver.hurtmeplenty.page;
 
+import automation.webdriver.utilities.CustomConditions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class EstimationResultPage {
+public class EstimateResultPage {
     private WebDriver driver;
 
     @FindBy(xpath = "//div[contains(text(),'VM class:')]")
@@ -28,39 +27,38 @@ public class EstimationResultPage {
     @FindBy(xpath = "//b[contains(text(),'Total Estimated Cost:')]")
     private WebElement totalEstimatedCost;
 
-    public EstimationResultPage(WebDriver driver) {
+    public EstimateResultPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
     public String getEstimatedVirtualMachineClass() {
-        new WebDriverWait(driver, 15)
-                .until(ExpectedConditions.visibilityOf(virtualMachineClassField));
+        CustomConditions.waitForVisibilityOf(virtualMachineClassField, driver);
         return virtualMachineClassField.getText().toLowerCase();
     }
 
     public String getEstimatedInstanceType() {
-        new WebDriverWait(driver, 15).until(ExpectedConditions.visibilityOf(instanceTypeField));
+        CustomConditions.waitForVisibilityOf(instanceTypeField, driver);
         return instanceTypeField.getText().toLowerCase();
     }
 
     public String getEstimatedRegion() {
-        new WebDriverWait(driver, 15).until(ExpectedConditions.visibilityOf(regionField));
+        CustomConditions.waitForVisibilityOf(regionField, driver);
         return regionField.getText().toLowerCase();
     }
 
     public String getEstimatedLocalSSD() {
-        new WebDriverWait(driver, 15).until(ExpectedConditions.visibilityOf(localSSDField));
+        CustomConditions.waitForVisibilityOf(localSSDField, driver);
         return localSSDField.getText().toLowerCase();
     }
 
     public String getEstimatedCommitmentTerm() {
-        new WebDriverWait(driver, 15).until(ExpectedConditions.visibilityOf(commitmentTermField));
+        CustomConditions.waitForVisibilityOf(commitmentTermField, driver);
         return commitmentTermField.getText().toLowerCase();
     }
 
     public String getTotalEstimatedCost() {
-        new WebDriverWait(driver, 15).until(ExpectedConditions.visibilityOf(totalEstimatedCost));
+        CustomConditions.waitForVisibilityOf(totalEstimatedCost, driver);
         return totalEstimatedCost.getText().toLowerCase();
     }
 }

@@ -1,17 +1,18 @@
 package automation.webdriver.hurtmeplenty.test;
 
-import automation.webdriver.hurtmeplenty.page.EstimationResultPage;
+import automation.webdriver.hurtmeplenty.page.EstimateResultPage;
 import automation.webdriver.hurtmeplenty.page.GoogleCloudPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import static org.testng.Assert.assertTrue;
+
 public class HurtMePlentyTest {
     private WebDriver driver;
-    private EstimationResultPage estimationResultPage;
+    private EstimateResultPage estimationResultPage;
 
     private static final String REQUIRED_VIRTUAL_MACHINE_CLASS = "regular";
     private static final String REQUIRED_INSTANCE_TYPE = "n1-standard-8";
@@ -35,44 +36,47 @@ public class HurtMePlentyTest {
 
     @Test
     public void estimatedVirtualMachineClassCorrespondsToRequired() {
-        Assert.assertTrue(estimationResultPage.getEstimatedVirtualMachineClass()
-                .contains(REQUIRED_VIRTUAL_MACHINE_CLASS.toLowerCase()),
+        boolean isVirtualMachineMatched = estimationResultPage.getEstimatedVirtualMachineClass()
+                                            .contains(REQUIRED_VIRTUAL_MACHINE_CLASS.toLowerCase());
+        assertTrue(isVirtualMachineMatched,
                 "Estimated virtual machine class doesn't correspond to required!");
     }
 
     @Test
     public void estimatedInstanceTypeCorrespondsToRequired() {
-        Assert.assertTrue(estimationResultPage.getEstimatedInstanceType()
-                        .contains(REQUIRED_INSTANCE_TYPE.toLowerCase()),
-                "Estimated instance type doesn't correspond to required!");
+        boolean isInstanceTypeMatched = estimationResultPage.getEstimatedInstanceType()
+                                            .contains(REQUIRED_INSTANCE_TYPE.toLowerCase());
+        assertTrue(isInstanceTypeMatched, "Estimated instance type doesn't correspond to required!");
     }
 
     @Test
     public void estimatedRegionCorrespondsToRequired() {
-        Assert.assertTrue(estimationResultPage.getEstimatedRegion()
-                        .contains(REQUIRED_REGION.toLowerCase()),
-                "Estimated region doesn't correspond to required!");
+        boolean isRegionMatched = estimationResultPage.getEstimatedRegion()
+                                      .contains(REQUIRED_REGION.toLowerCase());
+        assertTrue(isRegionMatched, "Estimated region doesn't correspond to required!");
     }
 
     @Test
     public void estimatedLocalSSDCorrespondsToRequired() {
-        Assert.assertTrue(estimationResultPage.getEstimatedLocalSSD()
-                        .contains(REQUIRED_LOCAL_SSD.toLowerCase()),
-                "Estimated local SSD doesn't correspond to required!");
+        boolean isLocalSSDMatched = estimationResultPage.getEstimatedLocalSSD()
+                                        .contains(REQUIRED_LOCAL_SSD.toLowerCase());
+        assertTrue(isLocalSSDMatched, "Estimated local SSD doesn't correspond to required!");
     }
 
     @Test
     public void estimatedCommitmentTermCorrespondsToRequired() {
-        Assert.assertTrue(estimationResultPage.getEstimatedCommitmentTerm()
-                        .contains(REQUIRED_COMMITMENT_TERM.toLowerCase()),
-                "Estimated commitment term doesn't correspond to required!");
+        boolean isCommitmentTermMatched = estimationResultPage.getEstimatedCommitmentTerm()
+                                              .contains(REQUIRED_COMMITMENT_TERM.toLowerCase());
+        assertTrue(isCommitmentTermMatched, "Estimated commitment term doesn't correspond"
+                   + " to required!");
     }
 
     @Test
     public void totalEstimatedCostCorrespondsToExpectedValue() {
-        Assert.assertTrue(estimationResultPage.getTotalEstimatedCost()
-                        .contains(EXPECTED_TOTAL_ESTIMATED_COST.toLowerCase()),
-                "Total estimated cost doesn't correspond to expected!");
+        boolean isTotalEstimatedCostMatched = estimationResultPage.getTotalEstimatedCost()
+                                             .contains(EXPECTED_TOTAL_ESTIMATED_COST.toLowerCase());
+        assertTrue(isTotalEstimatedCostMatched,"Total estimated cost doesn't correspond"
+                   + "to expected!");
     }
 
     @AfterClass(alwaysRun = true)

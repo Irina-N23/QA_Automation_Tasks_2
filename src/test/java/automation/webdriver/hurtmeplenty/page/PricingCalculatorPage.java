@@ -1,12 +1,11 @@
 package automation.webdriver.hurtmeplenty.page;
 
-import org.openqa.selenium.JavascriptExecutor;
+import automation.webdriver.utilities.CustomConditions;
+import automation.webdriver.utilities.JavaScriptUtilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class PricingCalculatorPage {
     private WebDriver driver;
@@ -39,19 +38,19 @@ public class PricingCalculatorPage {
     @FindBy(id = "select_value_label_55")
     private WebElement machineTypeDropDownList;
 
-    @FindBy(id = "select_option_212")
+    @FindBy(id = "select_option_213")
     private WebElement specifiedMachineType;
 
     @FindBy(xpath = "//md-checkbox[@aria-label='Add GPUs']")
     private WebElement addGPUsCheckbox;
 
-    @FindBy(id = "select_value_label_332")
+    @FindBy(id = "select_value_label_335")
     private WebElement numberOfGPUsDropDownList;
 
-    @FindBy(id = "select_option_339")
+    @FindBy(id = "select_option_342")
     private WebElement specifiedNumberOfGPUs;
 
-    @FindBy(id = "select_value_label_333")
+    @FindBy(id = "select_value_label_336")
     private WebElement GPUTypeDropDownList;
 
     @FindBy(xpath = "//div[contains(text(),'NVIDIA Tesla V100')]")
@@ -84,10 +83,7 @@ public class PricingCalculatorPage {
     }
 
     public PricingCalculatorPage specifyOptionsForEstimation() {
-        new WebDriverWait(driver, 15)
-                .until(ExpectedConditions.visibilityOf(firstCalculatorFrame));
-        driver.switchTo().frame(firstCalculatorFrame).switchTo().frame(secondCalculatorFrame);
-
+        CustomConditions.switchToInnerFrame(firstCalculatorFrame, secondCalculatorFrame, driver);
         chooseRequiredProduct();
         inputNumberOfInstances();
         specifyOperatingSystemOrSoftware();
@@ -100,10 +96,9 @@ public class PricingCalculatorPage {
         return this;
     }
 
-    public EstimationResultPage estimate() {
-        new WebDriverWait(driver, 15).until(ExpectedConditions.visibilityOf(addToEstimateButton));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", addToEstimateButton);
-        return new EstimationResultPage(driver);
+    public EstimateResultPage estimate() {
+        JavaScriptUtilities.clickOnVisibleElement(addToEstimateButton, driver);
+        return new EstimateResultPage(driver);
     }
 
     private void chooseRequiredProduct() {
@@ -116,43 +111,40 @@ public class PricingCalculatorPage {
     }
 
     private void specifyOperatingSystemOrSoftware() {
-        specifyOptionFromDropDownList(operatingSystemOrSoftwareDropDownList,
-                                      specifiedOperatingSystemOrSoftware);
+        JavaScriptUtilities.specifyOptionFromDropDownList(operatingSystemOrSoftwareDropDownList,
+                                                        specifiedOperatingSystemOrSoftware, driver);
     }
 
     private void specifyVirtualMachineClass() {
-        specifyOptionFromDropDownList(virtualMachineClassDropDownList, specifiedVirtualMachineClass);
+        JavaScriptUtilities.specifyOptionFromDropDownList(virtualMachineClassDropDownList,
+                                                          specifiedVirtualMachineClass, driver);
     }
 
     private void specifyMachineType() {
-        specifyOptionFromDropDownList(machineTypeDropDownList, specifiedMachineType);
+        JavaScriptUtilities.specifyOptionFromDropDownList(machineTypeDropDownList,
+                                                          specifiedMachineType, driver);
     }
 
     private void addGPUs() {
-        new WebDriverWait(driver, 15).until(ExpectedConditions.visibilityOf(addGPUsCheckbox));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", addGPUsCheckbox);
-
-        specifyOptionFromDropDownList(numberOfGPUsDropDownList, specifiedNumberOfGPUs);
-        specifyOptionFromDropDownList(GPUTypeDropDownList, specifiedGPUType);
+        JavaScriptUtilities.clickOnVisibleElement(addGPUsCheckbox, driver);
+        JavaScriptUtilities.specifyOptionFromDropDownList(numberOfGPUsDropDownList,
+                                                          specifiedNumberOfGPUs, driver);
+        JavaScriptUtilities.specifyOptionFromDropDownList(GPUTypeDropDownList, specifiedGPUType,
+                                                          driver);
     }
 
     private void specifyLocalSSD() {
-        specifyOptionFromDropDownList(localSSDDropDownList, specifiedLocalSSD);
+        JavaScriptUtilities.specifyOptionFromDropDownList(localSSDDropDownList, specifiedLocalSSD,
+                                                          driver);
     }
 
     private void specifyDataCenterLocation() {
-        specifyOptionFromDropDownList(dataCenterLocationDropDownList, specifiedDataCenterLocation);
+        JavaScriptUtilities.specifyOptionFromDropDownList(dataCenterLocationDropDownList,
+                                                          specifiedDataCenterLocation, driver);
     }
 
     private void specifyCommittedUsage() {
-        specifyOptionFromDropDownList(committedUsageDropDownList, specifiedCommittedUsage);
-    }
-
-    private void specifyOptionFromDropDownList(WebElement dropDownList, WebElement specifiedOption) {
-        new WebDriverWait(driver, 15).until(ExpectedConditions.visibilityOf(dropDownList));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", dropDownList);
-
-        new WebDriverWait(driver, 15).until(ExpectedConditions.visibilityOf(specifiedOption));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", specifiedOption);
+        JavaScriptUtilities.specifyOptionFromDropDownList(committedUsageDropDownList,
+                                                          specifiedCommittedUsage, driver);
     }
 }

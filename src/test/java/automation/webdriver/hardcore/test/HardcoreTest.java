@@ -3,10 +3,11 @@ package automation.webdriver.hardcore.test;
 import automation.webdriver.hardcore.page.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import static org.testng.Assert.assertTrue;
 
 public class HardcoreTest {
     private WebDriver driver;
@@ -28,10 +29,12 @@ public class HardcoreTest {
 
     @Test
     public void totalEstimatedMonthlyCostsAreEqualInCalculatorAndInEmail() {
-        Assert.assertTrue(new EstimateResultPage(driver)
-                                  .getTotalEstimatedMonthlyCostFromCalculatorPage()
-                        .contains(new TenMinuteMailPage(driver)
-                                          .getTotalEstimatedMonthlyCostFromReceivedEmail()),
+        String totalCostFromCalculatorPage = new EstimateResultPage(driver)
+                                                 .getTotalEstimatedMonthlyCostFromCalculatorPage();
+        String totalCostFromReceivedEmail = new TenMinuteMailPage(driver)
+                                                .getTotalEstimatedMonthlyCostFromReceivedEmail();
+        boolean isTotalCostMatched = totalCostFromCalculatorPage.contains(totalCostFromReceivedEmail);
+        assertTrue(isTotalCostMatched,
                 "Total estimated monthly costs are not equal in calculator and in received email!");
     }
 

@@ -1,10 +1,10 @@
 package automation.webdriver.hardcore.page;
 
+import automation.webdriver.utilities.CustomConditions;
+import automation.webdriver.utilities.JavaScriptUtilities;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.ArrayList;
 
 public class EmailForm {
@@ -16,7 +16,7 @@ public class EmailForm {
     @FindBy(id = "myFrame")
     private WebElement secondCalculatorFrame;
 
-    @FindBy(xpath = "//md-input-container//input[@type='email']")
+    @FindBy(id = "input_404")
     private WebElement emailField;
 
     @FindBy(xpath = "//button[contains(text(),'Send Email')]")
@@ -29,11 +29,9 @@ public class EmailForm {
 
     public EmailForm sendEmail() {
         copyGeneratedEmailFromTenMinuteMailTab();
-        new WebDriverWait(driver, 15).until(ExpectedConditions.visibilityOf(emailField));
+        CustomConditions.waitForVisibilityOf(emailField, driver);
         emailField.sendKeys(Keys.chord(Keys.CONTROL, "v") + Keys.ENTER);
-
-        new WebDriverWait(driver, 15).until(ExpectedConditions.visibilityOf(sendEmailButton));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", sendEmailButton);
+        JavaScriptUtilities.clickOnVisibleElement(sendEmailButton, driver);
         return this;
     }
 
@@ -45,9 +43,6 @@ public class EmailForm {
         new TenMinuteMailPage(driver).openTenMinuteMailPage().copyNewEmail();
 
         driver.switchTo().window(newWindowsSet.get(0));
-        new WebDriverWait(driver, 15).until(ExpectedConditions
-                .frameToBeAvailableAndSwitchToIt(firstCalculatorFrame));
-        new WebDriverWait(driver, 15).until(ExpectedConditions
-                .frameToBeAvailableAndSwitchToIt(secondCalculatorFrame));
+        CustomConditions.switchToInnerFrame(firstCalculatorFrame, secondCalculatorFrame, driver);
     }
 }

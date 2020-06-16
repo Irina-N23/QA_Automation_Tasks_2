@@ -1,18 +1,15 @@
 package automation.webdriver.icanwin.page;
 
-import org.openqa.selenium.By;
+import automation.webdriver.utilities.CustomConditions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class NewPastePage {
     private WebDriver driver;
-    private static final String SUCCESSFUL_PASTE_CREATION_MESSAGE_XPATH = "//div[@id='success']";
 
-    @FindBy(xpath = SUCCESSFUL_PASTE_CREATION_MESSAGE_XPATH)
+    @FindBy(id = "success")
     private WebElement successfulPasteCreationMessage;
 
     public NewPastePage(WebDriver driver) {
@@ -21,9 +18,7 @@ public class NewPastePage {
     }
 
     public Boolean isPasteCreated() {
-        new WebDriverWait(driver, 10)
-                .until(ExpectedConditions.presenceOfElementLocated(By
-                            .xpath(SUCCESSFUL_PASTE_CREATION_MESSAGE_XPATH)));
+        CustomConditions.waitForVisibilityOf(successfulPasteCreationMessage, driver);
         return successfulPasteCreationMessage.isDisplayed();
     }
 }

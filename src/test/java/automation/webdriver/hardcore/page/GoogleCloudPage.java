@@ -1,12 +1,11 @@
 package automation.webdriver.hardcore.page;
 
+import automation.webdriver.utilities.CustomConditions;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class GoogleCloudPage {
     private WebDriver driver;
@@ -25,7 +24,7 @@ public class GoogleCloudPage {
 
     public GoogleCloudPage openGoogleCloudPage() {
         driver.get(GOOGLE_CLOUD_PAGE_URL);
-        new WebDriverWait(driver, 15).until(ExpectedConditions.visibilityOf(searchButton));
+        CustomConditions.waitForVisibilityOf(searchButton, driver);
         return this;
     }
 

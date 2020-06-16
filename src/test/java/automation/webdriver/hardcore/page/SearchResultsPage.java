@@ -1,11 +1,10 @@
 package automation.webdriver.hardcore.page;
 
+import automation.webdriver.utilities.CustomConditions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SearchResultsPage {
     private WebDriver driver;
@@ -19,7 +18,7 @@ public class SearchResultsPage {
     }
 
     public PricingCalculatorPage goToPricingCalculatorPage() {
-        new WebDriverWait(driver, 15).until(ExpectedConditions.visibilityOf(pricingCalculatorLink));
+        CustomConditions.waitForVisibilityOf(pricingCalculatorLink, driver);
         pricingCalculatorLink.click();
         return new PricingCalculatorPage(driver);
     }

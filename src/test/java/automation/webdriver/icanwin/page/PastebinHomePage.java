@@ -1,12 +1,10 @@
 package automation.webdriver.icanwin.page;
 
-import automation.webdriver.CustomConditions;
-import org.openqa.selenium.By;
+import automation.webdriver.utilities.CustomConditions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class PastebinHomePage {
@@ -15,7 +13,7 @@ public class PastebinHomePage {
     private static final String PASTE_NAME = "helloweb";
     private WebDriver driver;
 
-    @FindBy(id="paste_code")
+    @FindBy(id = "paste_code")
     private WebElement newPasteInput;
 
     @FindBy(xpath = "//span[text()='Never']")
@@ -24,10 +22,10 @@ public class PastebinHomePage {
     @FindBy(xpath = "//li[contains(text(),'10 Minutes')]")
     private WebElement pasteExpirationChoice;
 
-    @FindBy(xpath = "//input[@name='paste_name']")
+    @FindBy(name = "paste_name")
     private WebElement pasteNameInput;
 
-    @FindBy(xpath = "//input[@id='submit']")
+    @FindBy(id = "submit")
     private WebElement createNewPasteButton;
 
     public PastebinHomePage(WebDriver driver) {
@@ -39,8 +37,7 @@ public class PastebinHomePage {
         driver.get(PASTEBIN_HOMEPAGE_URL);
         new WebDriverWait(driver, 10)
                 .until(CustomConditions.jQueryAJAXsCompleted());
-        new WebDriverWait(driver, 10)
-                .until(ExpectedConditions.presenceOfElementLocated(By.id("paste_code")));
+        CustomConditions.waitForVisibilityOf(newPasteInput, driver);
         return this;
     }
 

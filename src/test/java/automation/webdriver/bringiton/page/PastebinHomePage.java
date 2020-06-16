@@ -1,12 +1,11 @@
 package automation.webdriver.bringiton.page;
 
-import automation.webdriver.CustomConditions;
+import automation.webdriver.utilities.CustomConditions;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class PastebinHomePage {
@@ -24,7 +23,7 @@ public class PastebinHomePage {
     @FindBy(xpath = "//span[text()='None']")
     private WebElement syntaxHighlightingDropDownList;
 
-    @FindBy(xpath = "//input[@class='select2-search__field']")
+    @FindBy(className = "select2-search__field")
     private WebElement syntaxHighlightingField;
 
     @FindBy(xpath = "//span[text()='Never']")
@@ -33,10 +32,10 @@ public class PastebinHomePage {
     @FindBy(xpath = "//li[contains(text(),'10 Minutes')]")
     private WebElement specifiedPasteExpiration;
 
-    @FindBy(xpath = "//input[@name='paste_name']")
+    @FindBy(name = "paste_name")
     private WebElement pasteNameOrTitleField;
 
-    @FindBy(xpath = "//input[@id='submit']")
+    @FindBy(id = "submit")
     private WebElement createNewPasteButton;
 
     public PastebinHomePage(WebDriver driver) {
@@ -48,8 +47,7 @@ public class PastebinHomePage {
         driver.get(PASTEBIN_HOMEPAGE_URL);
         new WebDriverWait(driver, 15)
                 .until(CustomConditions.jQueryAJAXsCompleted());
-        new WebDriverWait(driver, 15)
-                .until(ExpectedConditions.visibilityOf(newPasteField));
+        CustomConditions.waitForVisibilityOf(newPasteField, driver);
         return this;
     }
 

@@ -1,10 +1,9 @@
 package automation.webdriver.hardcore.page;
 
+import automation.webdriver.utilities.CustomConditions;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.ArrayList;
 
 public class TenMinuteMailPage {
@@ -28,7 +27,7 @@ public class TenMinuteMailPage {
 
     public TenMinuteMailPage openTenMinuteMailPage() {
         driver.get(TEN_MINUTE_MAIL_PAGE_URL);
-        new WebDriverWait(driver, 15).until(ExpectedConditions.visibilityOf(mailAddressField));
+        CustomConditions.waitForVisibilityOf(mailAddressField, driver);
         return this;
     }
 
@@ -41,12 +40,8 @@ public class TenMinuteMailPage {
         ArrayList<String> newWindowsSet = new ArrayList<> (driver.getWindowHandles());
         driver.switchTo().window(newWindowsSet.get(1));
 
-        new WebDriverWait(driver, 120)
-                .until(ExpectedConditions.elementToBeClickable(emailWithEstimate));
-        emailWithEstimate.click();
-
-        new WebDriverWait(driver, 15)
-                .until(ExpectedConditions.visibilityOf(totalEstimatedMonthlyCost));
+        CustomConditions.clickOnClickableElement(emailWithEstimate, driver);
+        CustomConditions.waitForVisibilityOf(totalEstimatedMonthlyCost, driver);
         return totalEstimatedMonthlyCost.getText();
     }
 }
